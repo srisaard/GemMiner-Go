@@ -1,4 +1,5 @@
 # Provably Rare Gem Miner Go (for Rarity)
+Original https://github.com/TkzcM/GemMiner-Go
 
 ### Pull Request is strongly welcome as I don't know anything about Golang/Python/Web3.
 
@@ -11,4 +12,7 @@
 - Edit raritygems.py, fill your address, private key and gems kind in it.
 - Double click loop.py and mining started (There's no output).
 
-- Ex. If you want to random the salt, just open raritygems.py and replace "./main.exe" to "./main-rand.exe".
+# Update
+- line notify 
+    THX https://github.com/yoyoismee/Provably-Rare-Gem-Miner?fbclid=IwAR1OPzzuoDxHGWdilWADvwNBYF7-9yZLCOLp-a6gj6FFLQxqKPHFWulpG-g
+- random salt
