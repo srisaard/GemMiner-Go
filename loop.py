@@ -3,9 +3,8 @@ import subprocess
 print("LOOP: START subprocess")
 while True:
     try:
-        res = subprocess.Popen(
-            ['python', 'raritygems.py'], stdout=subprocess.PIPE,
+        res = subprocess.check_output(
+            ['python', 'raritygems.py'],
             universal_newlines=True, stderr=subprocess.STDOUT)
-        print(res.communicate())
     except Exception as e:
         print(e.stdout[:-1])

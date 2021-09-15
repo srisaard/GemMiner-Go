@@ -15,6 +15,7 @@ def claimGems(kind, salt, address, private_key):
     _ = w3.eth.wait_for_transaction_receipt(txn_hash)
     print("!!! TX DONE !!!")
 
+load_dotenv()
 
 target_gem = int(os.getenv('TARGET_GEM'))  # = Turquoise | 1 = Pearl etc...
 my_address = os.getenv('WALLET_ADDRESS')
