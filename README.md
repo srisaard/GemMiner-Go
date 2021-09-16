@@ -1,5 +1,5 @@
 # Provably Rare Gem Miner Go (for Rarity)
-Original https://github.com/TkzcM/GemMiner-Go
+Original https://github.com/TkzcM/GemMiner-Go  :hugs:
 
 ### Pull Request is strongly welcome as I don't know anything about Golang/Python/Web3.
 
@@ -29,7 +29,7 @@ PRIVATE_KEY=jg8fg9lsksmlaabbbcsefaksjdfpq023lfks
 DIFFICULTY=50000000
 THREAD_NUM=3
 ```
-- Double click loop.py and mining started (check status in Line) :+1.
+- Double click loop.py and mining started (check status in Line) :+1:.
 
 
 # Update
