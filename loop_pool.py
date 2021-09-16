@@ -36,7 +36,12 @@ def restart(sProcesses):
             print(f"Terminate FAILED Thread#{i}")
             pass
         sProcesses[i] = subprocess.Popen(
-                    ['python', 'raritygems_pool.py'], stdout=subprocess.PIPE,
+                    ['python', 'raritygems_pool.py',
+                     '--publicKey', my_address,
+                     '--privateKey', private_key,
+                     '--target_gem', str(target_gem),
+                     '--diff', str(diff),
+                     '--lineToken', NOTIFY_AUTH_TOKEN], stdout=subprocess.PIPE,
                     universal_newlines=True, stderr=subprocess.STDOUT)
         print(f"Start Thread#{i}  PID: {sProcesses[i].pid}")
         sleep(3)
@@ -70,13 +75,14 @@ pool_contract = w3.eth.contract(address=pool_addr, abi=pool_abi)
 current_nonce = gem_contract.functions.nonce(pool_addr).call()
 while True:
     try:
+        strTmp = ''
         for i, sProcess in enumerate(sProcesses):
             try:
                 if not sProcess:  # any thread send Tx and close itself
                     raise AttributeError
 
                 if sProcess.poll() is None:
-                    print(f"Thread {i} {sProcess.pid} is runing")
+                    strTmp += f"Thread {i} {sProcess.pid}, "
                 else:  # any thread has error
                     raise AttributeError
                     # print(f"Restart Thread#{i}")
@@ -94,8 +100,12 @@ while True:
                         '\nnonce: ' + str(current_nonce) +
                         '\ndifficulty: ' + str(diff)
                     }
-                res = requests.post(notify_url, data=body, headers=notify_headers)
+                res = requests.post(notify_url,
+                                    data=body,
+                                    headers=notify_headers)
                 break
+        else:
+            print(strTmp, "is running")
         sleep(10)
 
         now_nonce = gem_contract.functions.nonce(pool_addr).call()

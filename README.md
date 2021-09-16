@@ -29,7 +29,7 @@ PRIVATE_KEY=jg8fg9lsksmlaabbbcsefaksjdfpq023lfks
 DIFFICULTY=50000000
 THREAD_NUM=3
 ```
-- Double click loop.py and mining started (There's no output).
+- Double click loop.py and mining started (check status in Line) :+1.
 
 
 # Update

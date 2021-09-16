@@ -1,18 +1,18 @@
 from web3 import Web3
 import subprocess
-from dotenv import load_dotenv
 import requests
-import os
+import argparse
 
 
 def claimGems(kind, salt, address, private_key):
     try:
-        transaction = pool_contract.functions.mine(kind, salt).buildTransaction(
+        transaction = pool_contract.functions.mine(kind,salt).buildTransaction(
             {'from': address,
              'gas': 300000,
              'nonce': w3.eth.get_transaction_count(address)})
-        # transaction['gasPrice'] = 137035700000  # Gas Price (comment this line for auto setting)
-        signed_txn = w3.eth.account.sign_transaction(transaction, private_key=private_key)
+        # transaction['gasPrice'] = Gas Price (comment this line for auto setting)
+        signed_txn = w3.eth.account.sign_transaction(transaction,
+                                                     private_key=private_key)
 
         txn_hash = w3.eth.send_raw_transaction(signed_txn.rawTransaction)
         print('hash:', txn_hash)
@@ -24,15 +24,30 @@ def claimGems(kind, salt, address, private_key):
         return False
 
 
-load_dotenv()
+parser = argparse.ArgumentParser("Get the args")
+parser.add_argument("--publicKey", type=str, required=True,
+                    help="Your address/public key")
 
+parser.add_argument("--privateKey", type=str, required=True,
+                    help="Your private key")
 
-target_gem = int(os.getenv('TARGET_GEM'))  # 0 = Turquoise | 1 = Pearl etc...
-my_address = os.getenv('WALLET_ADDRESS')
-private_key = os.getenv('PRIVATE_KEY')
-diff = int(os.getenv('DIFFICULTY', 0))
+parser.add_argument("--target_gem", type=int, required=True,
+                    help="Gem kind: 0 = Turquoise | 1 = Pearl etc...")
 
-NOTIFY_AUTH_TOKEN = os.getenv('NOTIFY_AUTH_TOKEN', '')
+parser.add_argument("--diff", type=int, required=True,
+                    help="Difficulty")
+
+parser.add_argument("--lineToken", type=str, required=True,
+                    help="lineToken")
+
+args = parser.parse_args()
+
+target_gem = args.target_gem  # 0 = Turquoise | 1 = Pearl etc...
+my_address = args.publicKey
+private_key = args.privateKey
+diff = args.diff
+
+NOTIFY_AUTH_TOKEN = args.lineToken
 notify_url = 'https://notify-api.line.me/api/notify'
 notify_headers = {'Authorization': 'Bearer ' + NOTIFY_AUTH_TOKEN}
 

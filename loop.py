@@ -36,7 +36,11 @@ def restart(sProcesses):
             print(f"Terminate FAILED Thread#{i}")
             pass
         sProcesses[i] = subprocess.Popen(
-                    ['python', 'raritygems.py'], stdout=subprocess.PIPE,
+                    ['python', 'raritygems.py',
+                     '--publicKey', my_address,
+                     '--privateKey', private_key,
+                     '--target_gem', str(target_gem),
+                     '--lineToken', NOTIFY_AUTH_TOKEN], stdout=subprocess.PIPE,
                     universal_newlines=True, stderr=subprocess.STDOUT)
         print(f"Start Thread#{i} PID: {sProcesses[i].pid}")
         sleep(1)
@@ -75,7 +79,6 @@ while True:
                     strTmp += f"Thread {i} {sProcess.pid}, "
                 else:  # any thread has error
                     raise AttributeError
-                    # print(f"Restart Thread#{i}")
 
             except AttributeError:
                 sProcesses = restart(sProcesses)
@@ -92,7 +95,9 @@ while True:
                         '\nnonce: ' + str(nonce) +
                         '\ndifficulty: ' + str(diff)
                     }
-                res = requests.post(notify_url, data=body, headers=notify_headers)
+                res = requests.post(notify_url,
+                                    data=body,
+                                    headers=notify_headers)
                 break
         else:
             print(strTmp, "is running")
