@@ -101,8 +101,7 @@ while True:
         now_nonce = gem_contract.functions.nonce(pool_addr).call()
         if current_nonce != now_nonce:
             current_nonce = now_nonce
-            sProcesses[0].terminate()
-            sProcesses[0] = None
+            sProcesses = restart(sProcesses)
 
     except Exception as e:
         print(e.stdout[:-1])
