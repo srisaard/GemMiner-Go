@@ -14,3 +14,7 @@ Original https://github.com/TkzcM/GemMiner-Go
 # Update
 - line notify [Provably-Rare-Gem-Miner](https://github.com/yoyoismee/Provably-Rare-Gem-Miner?fbclid=IwAR1OPzzuoDxHGWdilWADvwNBYF7-9yZLCOLp-a6gj6FFLQxqKPHFWulpG-g)
 - random salt
+
+# Remark
+- go env -w GOOS=linux # for colab
+- go env -w GOOS=windows # for windows

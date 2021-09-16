@@ -1,0 +1,5 @@
+eth_abi
+pycryptodome
+web3
+python-dotenv
+line_notify

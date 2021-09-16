@@ -64,8 +64,8 @@ func main() {
 		if counter%100000 == 0 {
 			total += counter
 			now := time.Now().UnixNano()
-			fmt.Println("total hashes", total, "hashes per second : ", total/((now-start)/1e9+1))
 			if *chooseFunction == "Yes" {
+				fmt.Println("total hashes", total, "hashes per second : ", total/((now-start)/1e9+1))
 				break
 			}
 			start := time.Now().UnixNano()
