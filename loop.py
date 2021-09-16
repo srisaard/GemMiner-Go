@@ -26,7 +26,7 @@ def restart(sProcesses):
                     ['python', 'raritygems.py'], stdout=subprocess.PIPE,
                     universal_newlines=True, stderr=subprocess.STDOUT)
         print(f"Start Thread#{i}")
-        sleep(10)
+        sleep(3)
     return sProcesses
 
 
