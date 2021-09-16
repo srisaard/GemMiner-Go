@@ -4,20 +4,28 @@ from dotenv import load_dotenv
 import requests
 import os
 
-def claimGems(kind, salt, address, private_key):
-    transaction = gem_contract.functions.mine(kind, salt).buildTransaction(
-        {'from': address, 'nonce': w3.eth.get_transaction_count(address)})
-    # transaction['gasPrice'] = 137035700000  # Gas Price (comment this line for auto setting)
-    signed_txn = w3.eth.account.sign_transaction(transaction, private_key=private_key)
 
-    txn_hash = w3.eth.send_raw_transaction(signed_txn.rawTransaction)
-    print('hash:', txn_hash)
-    _ = w3.eth.wait_for_transaction_receipt(txn_hash)
-    print("!!! TX DONE !!!")
+def claimGems(kind, salt, address, private_key):
+    try:
+        transaction = gem_contract.functions.mine(kind, salt).buildTransaction(
+            {'from': address, 'nonce': w3.eth.get_transaction_count(address)})
+        # transaction['gasPrice'] = 137035700000  # Gas Price (comment this line for auto setting)
+        signed_txn = w3.eth.account.sign_transaction(transaction, private_key=private_key)
+
+        txn_hash = w3.eth.send_raw_transaction(signed_txn.rawTransaction)
+        print('hash:', txn_hash)
+        _ = w3.eth.wait_for_transaction_receipt(txn_hash)
+        print("!!! TX DONE !!!")
+        return True
+    except:
+        print("TX FAILED")
+        return False
+
 
 load_dotenv()
 
-target_gem = int(os.getenv('TARGET_GEM'))  # = Turquoise | 1 = Pearl etc...
+
+target_gem = int(os.getenv('TARGET_GEM'))  # 0 = Turquoise | 1 = Pearl etc...
 my_address = os.getenv('WALLET_ADDRESS')
 private_key = os.getenv('PRIVATE_KEY')
 diff = int(os.getenv('DIFFICULTY', 0))
@@ -37,7 +45,7 @@ while True:
     print("RARITYGEMS: START subprocess")
     print("RARITYGEMS: DIFF ->", diff)
     print("RARITYGEMS: NONCE ->", nonce)
-    
+
     if NOTIFY_AUTH_TOKEN != '':
         body = {
             'message': 'Starting gem mining...' +
@@ -61,14 +69,17 @@ while True:
 
     salt_result = int(res.split(':')[-1].replace(" ", ""))
 
-    claimGems(target_gem, salt_result, my_address, private_key)
-    if NOTIFY_AUTH_TOKEN != '':
-        body = {
-            'message': 'Gem found'
-                       + '\nkind: ' + str(target_gem)
-                       + '\nwallet: ' + my_address
-                       + '\nsalt: ' + str(salt_result)
-                       + '\nTransaction DONE'
-        }
-        res = requests.post(notify_url, data=body, headers=notify_headers)
-    print(nonce, 'claimed')
+    if(claimGems(target_gem, salt_result, my_address, private_key)):
+        if NOTIFY_AUTH_TOKEN != '':
+            body = {'message': 'Gem found'
+                    + '\nkind: ' + str(target_gem)
+                    + '\nwallet: ' + my_address
+                    + '\nnonce: ' + str(nonce)
+                    + '\nsalt: ' + str(salt_result)
+                    + '\nTransaction DONE'
+                    }
+            res = requests.post(notify_url, data=body, headers=notify_headers)
+        print(nonce, 'claimed')
+        break
+    else:
+        break
