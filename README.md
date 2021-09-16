@@ -16,7 +16,21 @@ $ cd /dirname/of/path/to/folder
 $ pip install -r requirements.txt
 ```
 - Edit .env, fill your address, private key, line notify token and gems kind in it.
+  - GET [Line notify token](https://notify-bot.line.me/en/)
+  - GET [Wallet Address](https://metamask.zendesk.com/hc/en-us/articles/360015289512-How-to-copy-your-MetaMask-account-public-address-)
+  - GET [Private Key](https://metamask.zendesk.com/hc/en-us/articles/360015289632-How-to-Export-an-Account-Private-Key)
+```
+.env
+
+WALLET_ADDRESS=0xA8sFe39sdfDIFJQO8A3dAB
+TARGET_GEM=2
+NOTIFY_AUTH_TOKEN=6WDcdaIDUROLB908DBJKS
+PRIVATE_KEY=jg8fg9lsksmlaabbbcsefaksjdfpq023lfks
+DIFFICULTY=50000000
+THREAD_NUM=3
+```
 - Double click loop.py and mining started (There's no output).
+
 
 # Update
 - line notify [Provably-Rare-Gem-Miner](https://github.com/yoyoismee/Provably-Rare-Gem-Miner?fbclid=IwAR1OPzzuoDxHGWdilWADvwNBYF7-9yZLCOLp-a6gj6FFLQxqKPHFWulpG-g)
@@ -24,6 +38,6 @@ $ pip install -r requirements.txt
 - mining pool
 
 # Remark
-- 25k HashRate / core on my environment (i5-9300H)
+- 25k Iterations/sec/core on my environment (i5-9300H)
 - go env -w GOOS=linux # for colab
 - go env -w GOOS=windows # for windows
