@@ -40,6 +40,9 @@ parser.add_argument("--diff", type=int, required=True,
 parser.add_argument("--lineToken", type=str, required=True,
                     help="lineToken")
 
+parser.add_argument("--pathEXE", type=str, required=True,
+                    help="path for go build file")
+
 args = parser.parse_args()
 
 target_gem = args.target_gem  # 0 = Turquoise | 1 = Pearl etc...
@@ -67,7 +70,7 @@ while True:
     print("RARITYGEMS: NONCE ->", nonce)
 
     res = subprocess.check_output(
-        ['./Salt_searching.exe',
+        [args.pathEXE,
          '-nonce', str(nonce),
          '-diff', str(diff),
          '-address', pool_addr,
