@@ -41,3 +41,4 @@ THREAD_NUM=3
 - 25k Iterations/sec/core on my environment (i5-9300H)
 - go env -w GOOS=linux # for colab
 - go env -w GOOS=windows # for windows
+- [COLAB](https://colab.research.google.com/drive/1SRAMRqd7mj27eqktheRRqx-f_g_yAQT9?usp=sharing)
